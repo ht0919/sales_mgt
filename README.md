@@ -48,7 +48,7 @@ $ mix phoenix.gen.html Item items name:string price:integer
 
 2. HTTPアクセスポイントの追加
   - テキストエディタで「web/router.ex」を開く
-  - 19行目の「get "/", PageController, :index」の下に「resources "/items", ItemController」を追加して保存する
+  - 20行目に「resources "/items", ItemController」を追加して保存する
 ```
 19:    get "/", PageController, :index
 20:    resources "/items", ItemController
@@ -80,7 +80,7 @@ $ mix phoenix.gen.html Sale sales date:date item_id:integer qty:integer
 
 2. HTTPアクセスポイントの追加
   - テキストエディタで「web/router.ex」を開く
-  - 20行目の「resources "/items", ItemController」の下に「resources "/sales", ItSaleController」を追加して保存する
+  - 21行目に「resources "/sales", ItSaleController」を追加して保存する
 ```
 19:    get "/", PageController, :index
 20:    resources "/items", ItemController
@@ -106,4 +106,36 @@ $ mix phoenix.server
 
 ## 2つのテーブルを連携
 
-- これから作成する予定です。
+1. web/models/item.exの修正
+  - 8行目に「has_many :sales, SalesMgt.ItSale」を追加
+```
+ 4: schema "items" do
+ 5:  field :name, :string
+ 6:  field :price, :integer
+ 7:
+ 8:  has_many :sales, SalesMgt.ItSale
+ 9:  timestamps()
+10: end
+```
+
+2.  web/models/it_sale.exの修正
+  - 6行目を「belongs_to :items, SalesMgt.Item, foreign_key: :item_id」に修正
+```
+ 4: schema "sales" do
+ 5:   field :date, Ecto.Date
+ 6:   belongs_to :items, SalesMgt.Item, foreign_key: :item_id
+ 7:   field :qty, :integer
+ 8:
+ 9:   timestamps()
+10: end
+```
+
+## 売上一覧の修正(商品名の表示)
+
+1. web/controllers/it_sale_controller.exの修正
+2. web/templates/it_sale/index.html.eexの修正
+
+## 売上詳細の修正(商品名の表示)
+
+1. web/controllers/it_sale_controller.exの修正
+2. web/templates/it_sale/show.html.eexの修正

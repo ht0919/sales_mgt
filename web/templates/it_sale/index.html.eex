@@ -14,7 +14,7 @@
 <%= for it_sale <- @sales do %>
     <tr>
       <td><%= it_sale.date %></td>
-      <td><%= it_sale.item_id %></td>
+      <td><%= it_sale.items.name %></td>
       <td><%= it_sale.qty %></td>
 
       <td class="text-right">
