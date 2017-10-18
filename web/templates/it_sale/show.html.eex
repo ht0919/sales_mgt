@@ -1,0 +1,23 @@
+<h2>Show it sale</h2>
+
+<ul>
+
+  <li>
+    <strong>Date:</strong>
+    <%= @it_sale.date %>
+  </li>
+
+  <li>
+    <strong>Item:</strong>
+    <%= @it_sale.item_id %>
+  </li>
+
+  <li>
+    <strong>Qty:</strong>
+    <%= @it_sale.qty %>
+  </li>
+
+</ul>
+
+<%= link "Edit", to: it_sale_path(@conn, :edit, @it_sale) %>
+<%= link "Back", to: it_sale_path(@conn, :index) %>

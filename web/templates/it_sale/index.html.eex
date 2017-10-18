@@ -1,0 +1,31 @@
+<h2>Listing sales</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Item</th>
+      <th>Qty</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for it_sale <- @sales do %>
+    <tr>
+      <td><%= it_sale.date %></td>
+      <td><%= it_sale.item_id %></td>
+      <td><%= it_sale.qty %></td>
+
+      <td class="text-right">
+        <%= link "Show", to: it_sale_path(@conn, :show, it_sale), class: "btn btn-default btn-xs" %>
+        <%= link "Edit", to: it_sale_path(@conn, :edit, it_sale), class: "btn btn-default btn-xs" %>
+        <%= link "Delete", to: it_sale_path(@conn, :delete, it_sale), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+      </td>
+    </tr>
+
+<% end %>
+  </tbody>
+</table>
+
+<%= link "New it sale", to: it_sale_path(@conn, :new) %>
