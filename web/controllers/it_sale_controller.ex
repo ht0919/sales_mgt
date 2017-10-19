@@ -4,7 +4,6 @@ defmodule SalesMgt.ItSaleController do
   alias SalesMgt.ItSale
 
   def index(conn, _params) do
-    #sales = Repo.all(ItSale)
     sales = Repo.all(ItSale) |> Repo.preload [:items]
     render(conn, "index.html", sales: sales)
   end
@@ -28,7 +27,6 @@ defmodule SalesMgt.ItSaleController do
   end
 
   def show(conn, %{"id" => id}) do
-    #it_sale = Repo.get!(ItSale, id)
     it_sale = Repo.get!(ItSale, id) |> Repo.preload [:items]
     render(conn, "show.html", it_sale: it_sale)
   end

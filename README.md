@@ -130,12 +130,42 @@ $ mix phoenix.server
 10: end
 ```
 
-## 売上一覧の修正(商品名の表示)
+## 売上一覧(index.html.eex)で商品名を表示
 
 1. web/controllers/it_sale_controller.exの修正
+  - 7行目を「sales = Repo.all(ItSale) |> Repo.preload [:items]」に修正
+```
+ 6: def index(conn, _params) do
+ 7:   sales = Repo.all(ItSale) |> Repo.preload [:items]
+ 8:   render(conn, "index.html", sales: sales)
+ 9: end
+```
+
 2. web/templates/it_sale/index.html.eexの修正
+  - 18行目を「<td><%= it_sale.items.name %></td>」に修正
+```
+16: <td><%= it_sale.date %></td>
+17: <td><%= it_sale.items.name %></td>
+18: <td><%= it_sale.qty %></td>
+```
 
-## 売上詳細の修正(商品名の表示)
+
+## 売上詳細(show.html.eex)で商品名を表示
 
 1. web/controllers/it_sale_controller.exの修正
+  - 29行目を「it_sale = Repo.get!(ItSale, id) |> Repo.preload [:items]」に修正
+```
+29: def show(conn, %{"id" => id}) do
+30:   it_sale = Repo.get!(ItSale, id) |> Repo.preload [:items]
+31:   render(conn, "show.html", it_sale: it_sale)
+32: end
+```
+
 2. web/templates/it_sale/show.html.eexの修正
+  - 12行目を「<%= @it_sale.items.name %>」に修正
+```
+10: <li>
+11:   <strong>Item:</strong>
+12:   <%= @it_sale.items.name %>
+13: </li>
+```

@@ -9,7 +9,6 @@
 
   <li>
     <strong>Item:</strong>
-    <%# @it_sale.item_id %>
     <%= @it_sale.items.name %>
   </li>
 
