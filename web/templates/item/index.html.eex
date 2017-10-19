@@ -26,3 +26,4 @@
 </table>
 
 <%= link "New item", to: item_path(@conn, :new) %>
+ | <%= link "Sales", to: it_sale_path(@conn, :index) %>

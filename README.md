@@ -3,7 +3,6 @@
 - 2つのテーブルを連携させたWebアプリの作例です。
 - 商品マスタと売上データを1対多の関係でリレーションしています。
 - 売上データの新規登録と変更時に商品名をメニュー選択できるようにしています。
-
 - テーブル構成
   - 商品マスタ(items)：商品名(name:string)、単価(price:integer)
   - 売上データ(sales)：日付(date:date)、商品ID(item_id:integer)、個数(qty:integer)
@@ -232,3 +231,20 @@ $ mix phoenix.server
 ```
 
 ![img07.png](https://raw.githubusercontent.com/ht0919/sales_mgt/master/images/img07.png)
+
+
+## インデックスページにリンクを追加
+
+1. web/templates/it_sale/index.html.eexの修正
+- 32行目を下記のように修正
+```
+31: <%= link "New it sale", to: it_sale_path(@conn, :new) %>
+32: | <%= link "Items", to: item_path(@conn, :index) %>
+```
+
+2. web/templates/item/index.html.eexの修正
+- 29行目を下記のように修正
+```
+28: <%= link "New item", to: item_path(@conn, :new) %>
+29:  | <%= link "Sales", to: it_sale_path(@conn, :index) %>
+```
