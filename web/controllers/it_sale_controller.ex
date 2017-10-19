@@ -10,7 +10,8 @@ defmodule SalesMgt.ItSaleController do
 
   def new(conn, _params) do
     changeset = ItSale.changeset(%ItSale{})
-    render(conn, "new.html", changeset: changeset)
+    items = Repo.all(SalesMgt.Item)
+    render(conn, "new.html", changeset: changeset, items: items)
   end
 
   def create(conn, %{"it_sale" => it_sale_params}) do
@@ -33,8 +34,9 @@ defmodule SalesMgt.ItSaleController do
 
   def edit(conn, %{"id" => id}) do
     it_sale = Repo.get!(ItSale, id)
+    items = Repo.all(SalesMgt.Item)
     changeset = ItSale.changeset(it_sale)
-    render(conn, "edit.html", it_sale: it_sale, changeset: changeset)
+    render(conn, "edit.html", it_sale: it_sale, changeset: changeset, items: items)
   end
 
   def update(conn, %{"id" => id, "it_sale" => it_sale_params}) do

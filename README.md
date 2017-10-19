@@ -175,3 +175,58 @@ $ mix phoenix.server
 ```
 
 ![img05.png](https://raw.githubusercontent.com/ht0919/sales_mgt/master/images/img05.png)
+
+
+## 売上登録(new.html.eex)で商品名をメニュー表示
+
+1. web/controllers/it_sale_controller.exの修正
+  - 13行目と14行目を下記のように修正
+```
+11: def new(conn, _params) do
+12:   changeset = ItSale.changeset(%ItSale{})
+13:   items = Repo.all(SalesMgt.Item)
+14:   render(conn, "new.html", changeset: changeset, items: items)
+15: end
+```
+
+2. web/templates/it_sale/new.html.eexの修正
+  - 4行目を下記のように修正
+```
+ 3: <%= render "form.html", changeset: @changeset,
+ 4:     action: it_sale_path(@conn, :create), items: @items %>
+```
+
+3. web/templates/it_sale/form.html.eexの修正
+  - 13行目を下記のように修正
+```
+11: <div class="form-group">
+12:   <%= label f, :item_id, class: "control-label" %>
+13:   <%= select f, :item_id, Enum.map(@items, fn(x) -> {x.name, x.id} end) %>
+14:   <%= error_tag f, :item_id %>
+15: </div>
+```
+
+![img06.png](https://raw.githubusercontent.com/ht0919/sales_mgt/master/images/img06.png)
+
+
+## 売上変更(edit.html.eex)で商品名をメニュー表示
+
+1. web/controllers/it_sale_controller.exの修正
+  - 37行目と39行目を下記のように修正
+```
+35: def edit(conn, %{"id" => id}) do
+36:   it_sale = Repo.get!(ItSale, id)
+37:   items = Repo.all(SalesMgt.Item)
+38:   changeset = ItSale.changeset(it_sale)
+39:   render(conn, "edit.html", it_sale: it_sale, changeset: changeset, items: items)
+40: end
+```
+
+2. web/templates/it_sale/edit.html.eexの修正
+  - 4行目を下記のように修正
+```
+ 3: <%= render "form.html", changeset: @changeset,
+ 4:     action: it_sale_path(@conn, :update, @it_sale), items: @items %>
+```
+
+![img07.png](https://raw.githubusercontent.com/ht0919/sales_mgt/master/images/img07.png)

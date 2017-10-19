@@ -1,6 +1,6 @@
 <h2>New it sale</h2>
 
 <%= render "form.html", changeset: @changeset,
-                        action: it_sale_path(@conn, :create) %>
+    action: it_sale_path(@conn, :create), items: @items %>
 
 <%= link "Back", to: it_sale_path(@conn, :index) %>
