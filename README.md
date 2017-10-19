@@ -1,6 +1,7 @@
 # Elixir+PhoenixによるWebアプリの作例(2)
 
 - 2つのテーブルを連携させたWebアプリの作例です。
+- 商品マスタと売上データを1対多の関係でリレーションしています。
 - テーブル構成
   - 商品マスタ(items)：商品名(name:string)、単価(price:integer)
   - 売上データ(sales)：日付(date:date)、商品ID(item_id:integer)、個数(qty:integer)
@@ -130,6 +131,7 @@ $ mix phoenix.server
 10: end
 ```
 
+
 ## 売上一覧(index.html.eex)で商品名を表示
 
 1. web/controllers/it_sale_controller.exの修正
@@ -142,18 +144,20 @@ $ mix phoenix.server
 ```
 
 2. web/templates/it_sale/index.html.eexの修正
-  - 18行目を「<td><%= it_sale.items.name %></td>」に修正
+  - 17行目を「<td><%= it_sale.items.name %></td>」に修正
 ```
 16: <td><%= it_sale.date %></td>
 17: <td><%= it_sale.items.name %></td>
 18: <td><%= it_sale.qty %></td>
 ```
 
+![img04.png](https://raw.githubusercontent.com/ht0919/sales_mgt/master/images/img04.png)
+
 
 ## 売上詳細(show.html.eex)で商品名を表示
 
 1. web/controllers/it_sale_controller.exの修正
-  - 29行目を「it_sale = Repo.get!(ItSale, id) |> Repo.preload [:items]」に修正
+  - 30行目を「it_sale = Repo.get!(ItSale, id) |> Repo.preload [:items]」に修正
 ```
 29: def show(conn, %{"id" => id}) do
 30:   it_sale = Repo.get!(ItSale, id) |> Repo.preload [:items]
@@ -169,3 +173,5 @@ $ mix phoenix.server
 12:   <%= @it_sale.items.name %>
 13: </li>
 ```
+
+![img05.png](https://raw.githubusercontent.com/ht0919/sales_mgt/master/images/img05.png)
